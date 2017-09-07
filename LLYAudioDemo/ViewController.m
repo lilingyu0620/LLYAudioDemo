@@ -198,7 +198,7 @@
         [_playSlider setThumbImage:pointImage forState:UIControlStateHighlighted];
         
         [_playSlider setMinimumTrackImage:[UIImage imageWithColor:[UIColor colorWithRed:0.78 green:0.15 blue:0.15 alpha:1.00]] forState:UIControlStateNormal];
-        [_playSlider setMaximumTrackImage:[UIImage imageWithColor:[UIColor lightGrayColor]] forState:UIControlStateNormal];
+        [_playSlider setMaximumTrackImage:[UIImage imageWithColor:[UIColor greenColor]] forState:UIControlStateNormal];
         
         _playSlider.value = 0;
         _playSlider.continuous = NO;
@@ -436,8 +436,8 @@
     [self.player replaceCurrentItemWithPlayerItem:playItem];
     [self.player play];
     
-    self.playSlider.value = 0.0;
-    [self.player seekToTime:kCMTimeZero];
+//    self.playSlider.value = 0.0;
+//    [self.player seekToTime:kCMTimeZero];
     
     [self addNotification];
     [self addObserverToPlayerItem:playItem];
@@ -537,6 +537,9 @@
     // 4设置歌曲的总时长
     [playingInfoDict setObject:@(self.musicModel.duration) forKey:MPMediaItemPropertyPlaybackDuration];
     
+    //当前播放时长
+    double time = CMTimeGetSeconds([self.player currentTime]);
+    [playingInfoDict setObject:@(time) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     
     //音乐信息赋值给获取锁屏中心的nowPlayingInfo属性
     playingInfoCenter.nowPlayingInfo = playingInfoDict;
